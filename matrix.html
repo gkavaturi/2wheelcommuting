@@ -1,0 +1,157 @@
+
+<!-- saved from url=(0059)http://madsgraphics.github.io/prez-coffeescript/matrix.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Matrix-like</title>
+<script language="JavaScript">
+/*
+filter:fliph;
+
+*/
+</script>
+<style>
+body{
+font-size:20pt;
+font-weight:none;
+background-color:#000000;
+color:#000000;
+}
+</style>
+<style type="text/css"></style><style type="text/css"></style></head>
+<body scroll="no">
+<script language="JavaScript">
+// definition de quelques valeurs
+var cw=document.body.clientWidth
+var ch=document.body.clientHeight
+var nb_cols=Math.floor(cw/16)
+// nb_cols--
+var nb_rows=Math.floor(ch/30)
+nb_rows--
+var dk_colors=new Array("#173317","#215221")
+var normal_color="#40A241"
+var light_color="#A9F0AC"
+var rnd_gly=new Array("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",",","/","+","-","*","_","{","%","!",".",";","$","1","2","3","4","5","6","7","8","9","0")
+
+// boucle collones et char+couleurs
+for(n_col=0;n_col<=nb_cols-1;n_col++){
+document.write("<div id=d"+n_col+" style='position:absolute;top:0px;'><tt></div>")
+document.getElementById("d"+n_col).style.width=16
+document.getElementById("d"+n_col).style.left=(n_col*16)
+var nb_chars=Math.floor(Math.random()*(nb_rows))
+document.getElementById("d"+n_col).style.height=(nb_chars+1)*30
+var h_div=parseInt(document.getElementById("d"+n_col).style.height)
+// pour vérifier ajouter à la ligne en dessous //
+document.getElementById("d"+n_col).style.top=-h_div
+document.getElementById("d"+n_col).style.filter="fliph"
+
+
+// mettre des caracteres avec des couleurs
+for(n_char=0;n_char<=nb_chars;n_char++){
+if(n_char<=1){
+document.getElementById("d"+n_col).innerHTML+="<tt><font color='"+dk_colors[n_char]+"'>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</font></tt><br>"
+}else if((n_char>1)&&(n_char<nb_chars)){
+document.getElementById("d"+n_col).innerHTML+="<tt><font color='"+normal_color+"'>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</font></tt><br>"
+}else{
+document.getElementById("d"+n_col).innerHTML+="<tt><font color='"+light_color+"'>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</font></tt>"
+}
+}
+// fin de déf des char_colorés ^
+}
+// fin boucle collones ^
+
+
+var deja_fait_st=new Array()
+var deja_fait_st_index=0
+
+function del_et_restart(numero){
+// del HTML
+document.getElementById("d"+numero).innerHTML="<tt>"
+// resiZe
+var nb_chars=Math.floor(Math.random()*(nb_rows))
+document.getElementById("d"+n_col).style.height=(nb_chars+1)*30
+var h_div=parseInt(document.getElementById("d"+n_col).style.height)
+document.getElementById("d"+n_col).style.top=-h_div
+// re-cholor et text
+for(n_char=0;n_char<=nb_chars;n_char++){
+if(n_char<=1){
+document.getElementById("d"+numero).innerHTML+="<tt><font color='"+dk_colors[n_char]+"'>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</font></tt><br>"
+}else if((n_char>1)&&(n_char<nb_chars)){
+document.getElementById("d"+numero).innerHTML+="<tt><font color='"+normal_color+"'>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</font></tt><br>"
+}else{
+document.getElementById("d"+numero).innerHTML+="<tt><font color='"+light_color+"'>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</font></tt>"
+}
+}
+}
+
+
+
+
+
+bas()
+function bas(){
+for(n_col=0;n_col<=nb_cols-1;n_col++){
+if(parseInt(document.getElementById("d"+n_col).style.top)<=ch){
+document.getElementById("d"+n_col).style.top=parseInt(document.getElementById("d"+n_col).style.top)+30
+}else{
+del_et_restart(n_col)
+}
+}
+window.setTimeout("bas()",50)
+}
+
+
+/* bas_st()
+function bas_st(){
+var current_down=Math.random()*nb_cols
+// recherche
+for(i=0;i<=deja_fait_st.length;i++){
+if (deja_fait_st.slice(i,i+1).substring(current_down)==-1){
+deja_fait_st[deja_fait_st_index]=current_down
+deja_fait_st_index++
+}
+else break
+}
+if(deja_fait_st==nb_cols){
+void(0)
+}else{
+document.getElementById("d"+n_col).style.top+=30
+bas_st()
+}
+}
+
+
+window.alert(nb_cols)
+window.alert(nb_rows)
+window.alert(nb_cols*nb_rows)
+document.write("<nobr>")
+
+for(n_col=0;n_col<=nb_cols-1;n_col++){
+document.write("<div id=d"+n_col+" style='position:absolute;top:0px;'><tt>"+rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"</div>")
+document.getElementById("d"+n_col).style.width=16
+document.getElementById("d"+n_col).style.left=(n_col*16)
+document.getElementById("d"+n_col).style.top=0
+document.getElementById("d"+n_col).style.height=ch-10
+// document.getElementById("d"+n_col).style.filter="fliph"
+// boucle contenu
+for(i=0;i<nb_rows;i++){
+document.getElementById("d"+n_col).innerHTML+=rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"<br>"
+}
+document.getElementById("d"+n_col).innerHTML+=rnd_gly[Math.floor(Math.random()*rnd_gly.length)]
+}
+document.write("</nobr>")
+window.setTimeout("down()", 5)
+
+function down(){
+for(n_col=0;n_col<=nb_cols-1;n_col++){
+document.getElementById("d"+n_col).innerHTML=rnd_gly[Math.floor(Math.random()*rnd_gly.length)]+"<br>"+document.getElementById("d"+n_col).innerHTML
+// document.getElementById("d"+n_col).innerHTML=document.getElementById("d"+n_col).innerHTML.substring(0, document.getElementById("d"+n_col).innerHTML.lastIndexOf("<br>"))
+}
+window.setTimeout("down()", 500)
+}
+
+
+
+*/
+</script><div id="d0" style="position: absolute; top: 30px; width: 16px; left: 0px; height: 90px;"><tt></tt><tt><font color="#173317">s</font></tt><br><tt><font color="#215221">2</font></tt><br><tt><font color="#A9F0AC">n</font></tt></div><div id="d1" style="position: absolute; top: 300px; width: 16px; left: 16px; height: 300px;"><tt></tt><tt><font color="#173317">j</font></tt><br><tt><font color="#215221">e</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">%</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#40A241">1</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#A9F0AC">j</font></tt></div><div id="d2" style="position: absolute; top: 30px; width: 16px; left: 32px; height: 390px;"><tt></tt><tt><font color="#173317">j</font></tt><br><tt><font color="#215221">s</font></tt><br><tt><font color="#40A241">s</font></tt><br><tt><font color="#40A241">0</font></tt><br><tt><font color="#40A241">$</font></tt><br><tt><font color="#40A241">s</font></tt><br><tt><font color="#40A241">e</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#40A241">z</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#A9F0AC">x</font></tt></div><div id="d3" style="position: absolute; top: -60px; width: 16px; left: 48px; height: 390px;"><tt></tt><tt><font color="#173317">8</font></tt><br><tt><font color="#215221">5</font></tt><br><tt><font color="#40A241">n</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#40A241">,</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#40A241">1</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#A9F0AC">q</font></tt></div><div id="d4" style="position: absolute; top: 270px; width: 16px; left: 64px; height: 240px;"><tt></tt><tt><font color="#173317">%</font></tt><br><tt><font color="#215221">r</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#40A241">u</font></tt><br><tt><font color="#40A241">g</font></tt><br><tt><font color="#A9F0AC">/</font></tt></div><div id="d5" style="position: absolute; top: 450px; width: 16px; left: 80px; height: 30px;"><tt></tt><tt><font color="#173317">3</font></tt><br></div><div id="d6" style="position: absolute; top: -30px; width: 16px; left: 96px; height: 150px;"><tt></tt><tt><font color="#173317">c</font></tt><br><tt><font color="#215221">6</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">q</font></tt><br><tt><font color="#A9F0AC">w</font></tt></div><div id="d7" style="position: absolute; top: -330px; width: 16px; left: 112px; height: 360px;"><tt></tt><tt><font color="#173317">1</font></tt><br><tt><font color="#215221">2</font></tt><br><tt><font color="#40A241">j</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#40A241">r</font></tt><br><tt><font color="#40A241">z</font></tt><br><tt><font color="#40A241">l</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">9</font></tt><br><tt><font color="#A9F0AC">j</font></tt></div><div id="d8" style="position: absolute; top: 420px; width: 16px; left: 128px; height: 390px;"><tt></tt><tt><font color="#173317">5</font></tt><br><tt><font color="#215221">c</font></tt><br><tt><font color="#40A241">s</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">j</font></tt><br><tt><font color="#40A241">q</font></tt><br><tt><font color="#40A241">%</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#A9F0AC">2</font></tt></div><div id="d9" style="position: absolute; top: -390px; width: 16px; left: 144px; height: 390px;"><tt></tt><tt><font color="#173317">4</font></tt><br><tt><font color="#215221">s</font></tt><br><tt><font color="#40A241">1</font></tt><br><tt><font color="#40A241">g</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">%</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">0</font></tt><br><tt><font color="#A9F0AC">/</font></tt></div><div id="d10" style="position: absolute; top: 240px; width: 16px; left: 160px; height: 240px;"><tt></tt><tt><font color="#173317">3</font></tt><br><tt><font color="#215221">8</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">9</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#A9F0AC">i</font></tt></div><div id="d11" style="position: absolute; top: -360px; width: 16px; left: 176px; height: 390px;"><tt></tt><tt><font color="#173317">l</font></tt><br><tt><font color="#215221">r</font></tt><br><tt><font color="#40A241">e</font></tt><br><tt><font color="#40A241">l</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">v</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#40A241">u</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">g</font></tt><br><tt><font color="#A9F0AC">6</font></tt></div><div id="d12" style="position: absolute; top: 0px; width: 16px; left: 192px; height: 210px;"><tt></tt><tt><font color="#173317">r</font></tt><br><tt><font color="#215221">u</font></tt><br><tt><font color="#40A241">l</font></tt><br><tt><font color="#40A241">9</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#A9F0AC">s</font></tt></div><div id="d13" style="position: absolute; top: -60px; width: 16px; left: 208px; height: 270px;"><tt></tt><tt><font color="#173317">4</font></tt><br><tt><font color="#215221">a</font></tt><br><tt><font color="#40A241">z</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">u</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#40A241">/</font></tt><br><tt><font color="#A9F0AC">!</font></tt></div><div id="d14" style="position: absolute; top: 300px; width: 16px; left: 224px; height: 120px;"><tt></tt><tt><font color="#173317">+</font></tt><br><tt><font color="#215221">0</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#A9F0AC">f</font></tt></div><div id="d15" style="position: absolute; top: 450px; width: 16px; left: 240px; height: 330px;"><tt></tt><tt><font color="#173317">v</font></tt><br><tt><font color="#215221">6</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">z</font></tt><br><tt><font color="#40A241">*</font></tt><br><tt><font color="#40A241">8</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#A9F0AC">9</font></tt></div><div id="d16" style="position: absolute; top: -60px; width: 16px; left: 256px; height: 90px;"><tt></tt><tt><font color="#173317">.</font></tt><br><tt><font color="#215221">8</font></tt><br><tt><font color="#A9F0AC">4</font></tt></div><div id="d17" style="position: absolute; top: 360px; width: 16px; left: 272px; height: 390px;"><tt></tt><tt><font color="#173317">m</font></tt><br><tt><font color="#215221">7</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#40A241">/</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">m</font></tt><br><tt><font color="#40A241">l</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#40A241">m</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#A9F0AC">y</font></tt></div><div id="d18" style="position: absolute; top: 210px; width: 16px; left: 288px; height: 420px;"><tt></tt><tt><font color="#173317">d</font></tt><br><tt><font color="#215221">2</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">e</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">n</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">8</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#A9F0AC">h</font></tt></div><div id="d19" style="position: absolute; top: 60px; width: 16px; left: 304px; height: 390px;"><tt></tt><tt><font color="#173317">q</font></tt><br><tt><font color="#215221">2</font></tt><br><tt><font color="#40A241">e</font></tt><br><tt><font color="#40A241">0</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#40A241">b</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">e</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#A9F0AC">f</font></tt></div><div id="d20" style="position: absolute; top: -30px; width: 16px; left: 320px; height: 300px;"><tt></tt><tt><font color="#173317">4</font></tt><br><tt><font color="#215221">n</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#40A241">s</font></tt><br><tt><font color="#A9F0AC">;</font></tt></div><div id="d21" style="position: absolute; top: 180px; width: 16px; left: 336px; height: 90px;"><tt></tt><tt><font color="#173317">x</font></tt><br><tt><font color="#215221">9</font></tt><br><tt><font color="#A9F0AC">i</font></tt></div><div id="d22" style="position: absolute; top: 120px; width: 16px; left: 352px; height: 300px;"><tt></tt><tt><font color="#173317">0</font></tt><br><tt><font color="#215221">d</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">*</font></tt><br><tt><font color="#40A241">9</font></tt><br><tt><font color="#40A241">j</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">n</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#A9F0AC">9</font></tt></div><div id="d23" style="position: absolute; top: 300px; width: 16px; left: 368px; height: 120px;"><tt></tt><tt><font color="#173317">7</font></tt><br><tt><font color="#215221">t</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#A9F0AC">x</font></tt></div><div id="d24" style="position: absolute; top: 120px; width: 16px; left: 384px; height: 330px;"><tt></tt><tt><font color="#173317">y</font></tt><br><tt><font color="#215221">/</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">{</font></tt><br><tt><font color="#40A241">r</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">1</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#A9F0AC">;</font></tt></div><div id="d25" style="position: absolute; top: 450px; width: 16px; left: 400px; height: 300px;"><tt></tt><tt><font color="#173317">$</font></tt><br><tt><font color="#215221">s</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">j</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">*</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">{</font></tt><br><tt><font color="#A9F0AC">%</font></tt></div><div id="d26" style="position: absolute; top: 420px; width: 16px; left: 416px; height: 150px;"><tt></tt><tt><font color="#173317">k</font></tt><br><tt><font color="#215221">6</font></tt><br><tt><font color="#40A241">m</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#A9F0AC">i</font></tt></div><div id="d27" style="position: absolute; top: 360px; width: 16px; left: 432px; height: 390px;"><tt></tt><tt><font color="#173317">a</font></tt><br><tt><font color="#215221">q</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">/</font></tt><br><tt><font color="#40A241">q</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">/</font></tt><br><tt><font color="#40A241">1</font></tt><br><tt><font color="#40A241">e</font></tt><br><tt><font color="#40A241">,</font></tt><br><tt><font color="#40A241">$</font></tt><br><tt><font color="#A9F0AC">+</font></tt></div><div id="d28" style="position: absolute; top: 210px; width: 16px; left: 448px; height: 270px;"><tt></tt><tt><font color="#173317">x</font></tt><br><tt><font color="#215221">,</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#40A241">j</font></tt><br><tt><font color="#40A241">s</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#A9F0AC">m</font></tt></div><div id="d29" style="position: absolute; top: 60px; width: 16px; left: 464px; height: 120px;"><tt></tt><tt><font color="#173317">3</font></tt><br><tt><font color="#215221">d</font></tt><br><tt><font color="#40A241">q</font></tt><br><tt><font color="#A9F0AC">t</font></tt></div><div id="d30" style="position: absolute; top: -180px; width: 16px; left: 480px; height: 300px;"><tt></tt><tt><font color="#173317">7</font></tt><br><tt><font color="#215221">o</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">m</font></tt><br><tt><font color="#40A241">b</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#A9F0AC">.</font></tt></div><div id="d31" style="position: absolute; top: -90px; width: 16px; left: 496px; height: 120px;"><tt></tt><tt><font color="#173317">x</font></tt><br><tt><font color="#215221">/</font></tt><br><tt><font color="#40A241">*</font></tt><br><tt><font color="#A9F0AC">{</font></tt></div><div id="d32" style="position: absolute; top: -90px; width: 16px; left: 512px; height: 240px;"><tt></tt><tt><font color="#173317">;</font></tt><br><tt><font color="#215221">o</font></tt><br><tt><font color="#40A241">*</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">b</font></tt><br><tt><font color="#40A241">!</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#A9F0AC">x</font></tt></div><div id="d33" style="position: absolute; top: 450px; width: 16px; left: 528px; height: 120px;"><tt></tt><tt><font color="#173317">_</font></tt><br><tt><font color="#215221">*</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#A9F0AC">k</font></tt></div><div id="d34" style="position: absolute; top: 150px; width: 16px; left: 544px; height: 30px;"><tt></tt><tt><font color="#173317">/</font></tt><br></div><div id="d35" style="position: absolute; top: 60px; width: 16px; left: 560px; height: 330px;"><tt></tt><tt><font color="#173317">1</font></tt><br><tt><font color="#215221">c</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">%</font></tt><br><tt><font color="#40A241">l</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#A9F0AC">8</font></tt></div><div id="d36" style="position: absolute; top: -150px; width: 16px; left: 576px; height: 240px;"><tt></tt><tt><font color="#173317">x</font></tt><br><tt><font color="#215221">k</font></tt><br><tt><font color="#40A241">x</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#A9F0AC">h</font></tt></div><div id="d37" style="position: absolute; top: 300px; width: 16px; left: 592px; height: 120px;"><tt></tt><tt><font color="#173317">%</font></tt><br><tt><font color="#215221">i</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#A9F0AC">_</font></tt></div><div id="d38" style="position: absolute; top: 0px; width: 16px; left: 608px; height: 360px;"><tt></tt><tt><font color="#173317">0</font></tt><br><tt><font color="#215221">e</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#40A241">s</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#A9F0AC">i</font></tt></div><div id="d39" style="position: absolute; top: 150px; width: 16px; left: 624px; height: 60px;"><tt></tt><tt><font color="#173317">v</font></tt><br><tt><font color="#215221">2</font></tt><br></div><div id="d40" style="position: absolute; top: 120px; width: 16px; left: 640px; height: 360px;"><tt></tt><tt><font color="#173317">+</font></tt><br><tt><font color="#215221">q</font></tt><br><tt><font color="#40A241">!</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#40A241">8</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">r</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#A9F0AC">p</font></tt></div><div id="d41" style="position: absolute; top: 480px; width: 16px; left: 656px; height: 30px;"><tt></tt><tt><font color="#173317">q</font></tt><br></div><div id="d42" style="position: absolute; top: -30px; width: 16px; left: 672px; height: 60px;"><tt></tt><tt><font color="#173317">z</font></tt><br><tt><font color="#215221">,</font></tt><br></div><div id="d43" style="position: absolute; top: 420px; width: 16px; left: 688px; height: 420px;"><tt></tt><tt><font color="#173317">f</font></tt><br><tt><font color="#215221">v</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#40A241">9</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">*</font></tt><br><tt><font color="#40A241">0</font></tt><br><tt><font color="#40A241">%</font></tt><br><tt><font color="#40A241">5</font></tt><br><tt><font color="#40A241">o</font></tt><br><tt><font color="#40A241">k</font></tt><br><tt><font color="#A9F0AC">q</font></tt></div><div id="d44" style="position: absolute; top: -300px; width: 16px; left: 704px; height: 300px;"><tt></tt><tt><font color="#173317">2</font></tt><br><tt><font color="#215221">-</font></tt><br><tt><font color="#40A241">n</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">_</font></tt><br><tt><font color="#40A241">/</font></tt><br><tt><font color="#40A241">r</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#A9F0AC">4</font></tt></div><div id="d45" style="position: absolute; top: 150px; width: 16px; left: 720px; height: 90px;"><tt></tt><tt><font color="#173317">y</font></tt><br><tt><font color="#215221">%</font></tt><br><tt><font color="#A9F0AC">1</font></tt></div><div id="d46" style="position: absolute; top: 180px; width: 16px; left: 736px; height: 210px;"><tt></tt><tt><font color="#173317">m</font></tt><br><tt><font color="#215221">i</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">.</font></tt><br><tt><font color="#40A241">x</font></tt><br><tt><font color="#40A241">h</font></tt><br><tt><font color="#A9F0AC">-</font></tt></div><div id="d47" style="position: absolute; top: 360px; width: 16px; left: 752px; height: 420px;"><tt></tt><tt><font color="#173317">/</font></tt><br><tt><font color="#215221">/</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#40A241">g</font></tt><br><tt><font color="#40A241">/</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">{</font></tt><br><tt><font color="#40A241">-</font></tt><br><tt><font color="#40A241">3</font></tt><br><tt><font color="#40A241">{</font></tt><br><tt><font color="#40A241">y</font></tt><br><tt><font color="#40A241">n</font></tt><br><tt><font color="#A9F0AC">i</font></tt></div><div id="d48" style="position: absolute; top: 300px; width: 16px; left: 768px; height: 150px;"><tt></tt><tt><font color="#173317">-</font></tt><br><tt><font color="#215221">o</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">f</font></tt><br><tt><font color="#A9F0AC">9</font></tt></div><div id="d49" style="position: absolute; top: 180px; width: 16px; left: 784px; height: 30px;"><tt></tt><tt><font color="#173317">b</font></tt><br></div><div id="d50" style="position: absolute; top: -360px; width: 16px; left: 800px; height: 360px;"><tt></tt><tt><font color="#173317">v</font></tt><br><tt><font color="#215221">t</font></tt><br><tt><font color="#40A241">6</font></tt><br><tt><font color="#40A241">w</font></tt><br><tt><font color="#40A241">i</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">,</font></tt><br><tt><font color="#40A241">4</font></tt><br><tt><font color="#40A241">d</font></tt><br><tt><font color="#40A241">{</font></tt><br><tt><font color="#40A241">m</font></tt><br><tt><font color="#A9F0AC">m</font></tt></div><div id="d51" style="position: absolute; top: -210px; width: 16px; left: 816px; height: 390px;"><tt></tt><tt><font color="#173317">u</font></tt><br><tt><font color="#215221">/</font></tt><br><tt><font color="#40A241">p</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#40A241">n</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">q</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">t</font></tt><br><tt><font color="#40A241">8</font></tt><br><tt><font color="#40A241">2</font></tt><br><tt><font color="#40A241">c</font></tt><br><tt><font color="#A9F0AC">v</font></tt></div><div id="d52" style="position: absolute; top: 330px; width: 16px; left: 832px; height: 330px;"><tt></tt><tt><font color="#173317">7</font></tt><br><tt><font color="#215221">r</font></tt><br><tt><font color="#40A241">x</font></tt><br><tt><font color="#40A241">r</font></tt><br><tt><font color="#40A241">;</font></tt><br><tt><font color="#40A241">j</font></tt><br><tt><font color="#40A241">$</font></tt><br><tt><font color="#40A241">7</font></tt><br><tt><font color="#40A241">m</font></tt><br><tt><font color="#40A241">+</font></tt><br><tt><font color="#A9F0AC">n</font></tt></div><tt><tt><tt>
+
+
+</tt></tt></tt></body></html>
